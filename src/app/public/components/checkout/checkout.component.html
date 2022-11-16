@@ -1,0 +1,93 @@
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Produits Name</th>
+                                <th>Quantité</th>
+                                <th>PrixUnitaire</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let list of List">
+                                <td class="shoping__cart__item">
+                                    <img src="assets/img/cart/cart-1.jpg" alt="">
+                                    <h5>CAROTE</h5>
+                                </td>
+                                <td class="quantity-box"><input type="number"
+                                    size="4" value="1" min="0" step="1" 
+                                    class="c-input-text qty text">
+                               </td>
+                                <td class="shoping__cart__total">
+                                    600FCFA
+                                </td>
+                                <td class="shoping__cart__total">
+                                    60.000FCFA
+                                </td>
+                                <td class="remove-pr">
+                                    <a href="#">
+                                <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="shoping__cart__item">
+                                    <img src="assets/img/cart/cart-2.jpg" alt="">
+                                    <h5>POMME DE TERRE</h5>
+                                </td>
+                                <td class="quantity-box"><input type="number"
+                                    size="4" value="1" min="0" step="1" 
+                                    class="c-input-text qty text">
+                               </td>
+                                <td class="shoping__cart__total">
+                                    600FCFA
+                                </td>
+                                <td class="shoping__cart__total">
+                                   120.000FCFA
+                                </td>
+                                <td class="remove-pr">
+                                    <a href="#">
+                                <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="shoping__cart__item">
+                                    <img src="assets/img/cart/cart-3.jpg" alt="">
+                                    <h5>CHou</h5>
+                                </td>
+                                <td class="quantity-box"><input type="number"
+                                    size="4" value="1" min="0" step="1" 
+                                    class="c-input-text qty text">
+                               </td>
+                                <td class="shoping__cart__total">
+                                    600FCFA
+                                </td>
+                                <td class="shoping__cart__total">
+                                    150.000FCFA
+                                </td>
+                                <td class="remove-pr">
+                                    <a href="#">
+                                <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <a href="public/paiement" class="primary-btn">Terminer Votre Achat</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

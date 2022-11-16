@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AuthService } from '../core/services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
 
 
 
@@ -10,15 +13,25 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     declarations: [
         NavbarComponent,
         FooterComponent,
-        SidebarComponent
+        SidebarComponent,
+        HeaderComponent,
+
     ],
   exports: [
     NavbarComponent,
     FooterComponent,
-    SidebarComponent
+    SidebarComponent,
+    HeaderComponent,
+    HttpClientModule
   ],
     imports: [
-        CommonModule
+        CommonModule,
+        HttpClientModule
+    ],
+    providers:[
+      AuthService
+
     ]
+
 })
 export class SharedModule { }

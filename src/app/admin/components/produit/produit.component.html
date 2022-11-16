@@ -1,0 +1,106 @@
+<section class="content-header">
+    <div class="container">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Gestions Produits</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Categorie</a></li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+<section class="shoping-cart spad">
+    <div class="container">
+        <form action="#">
+            <div class="row">
+                <div class="col-lg-8 col-md-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="checkout__input">
+                                <p>Libellé<span></span></p>
+                                <input type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="checkout__input">
+                                <p>Description<span></span></p>
+                                <input type="text">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="checkout__input">
+                                <p>Quantité<span></span></p>
+                                <input type="text">
+                            </div>
+                         </div>
+                         <div class="col-lg-6">
+                            <div class="checkout__input">
+                                <p>Prix_Vente<span></span></p>
+                                <input type="text">
+                            </div>
+                         </div>
+                         <div class="col-lg-12">
+                            <div class="checkout__input">
+                                <p>Choisir_Produits<span></span></p>
+                                <input class="form-control" type="file" id="formFile">
+                            </div>
+                         </div>
+                         <div class="col-md-12 form-group">
+                            <label>Categorie</label>
+                            <select name="code_client" class="form-control" formControlName="code_client" id="code_client">
+                            <option value="0">-Select-</option>
+                            <option value="0">Légumes racines</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="btn btn-success">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+        </form>
+        <div class="card">
+            <div class="card-body p-0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Produits</th>
+                    <th>Libélle</th>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>Prix_Vente</th>
+                    <th>Categorie</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of List">
+                        <td>{{list.id}}</td>
+                        <td>{{list.produits}}
+                            <img src="assets/img/cart/cart-1.jpg" alt="">
+                        </td>
+                        <td>{{list.libelle}}</td>
+                        <td>{{list.description}}</td>
+                        <td>{{list.quantite}}</td>
+                        <td>{{list.Prix_vente}}</td>
+                        <td>{{list.categorie}}</td>
+                        <td>
+                            <div>
+                                <button type="button" class="btn btn-warning">Edit</button>
+        
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+    </div>
+</section>
