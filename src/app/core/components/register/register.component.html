@@ -1,68 +1,83 @@
 <body class="hold-transition register-page">
-  <div class="register-box">
-    <div class="card card-outline card-primary">
-      <div class="card-header text-center">
-      </div>
-      <div class="card-body">
-        <p class="login-box-msg">CREEZ VOTRE COMPTE</p>
-  
-          <div class="form-group form-primary">
-            <input type="text" class="form-control form-control-user" formControlName="username" id="username"
-            placeholder="Votre Nom">
-              <span class="form-bar"></span>
-              <label class="float-label">nom</label>
+<div class="register-box">
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">CREEZ VOTRE COMPTE</p>
+      <form (ngSubmit)="signUp()" [formGroup]="registerForm" method="post">
+        <div class="form-group form-primary">
+          <label class="float-label">prénom</label>
+          <input class="form-control form-control-user" formControlName="prenom" id="nom" placeholder="Votre Prénom"
+                 type="text">
+          <span class="form-bar"></span>
+          <div *ngIf="isSubmitted && formControls['prenom'].errors" class="form-text text-danger">
+            <div *ngIf="formControls['prenom'].errors['required']" class="text-red-600">Le prénom est obligatoire
+            </div>
           </div>
-          <div class="form-group form-primary">
-            <input type="text" class="form-control form-control-user" formControlName="nom" id="nom"
-            placeholder="Votre Prénom">
-              <span class="form-bar"></span>
-              <label class="float-label">prénom</label>
+
+        </div>
+        <div class="form-group form-primary">
+          <label class="float-label">nom</label>
+          <input class="form-control form-control-user" formControlName="nom" placeholder="Votre Nom"
+                 type="text">
+          <span class="form-bar"></span>
+          <div *ngIf="isSubmitted && formControls['nom'].errors" class="form-text text-danger">
+            <div *ngIf="formControls['nom'].errors['required']" class="text-red-600">Le nom est obligatoire
+            </div>
           </div>
-  
-          <div class="form-group form-primary">
-            <input type="text" class="form-control form-control-user" id="email" formControlName="email"
-            placeholder="Votre Email">     
-              <span class="form-bar"></span>
-              <label class="float-label">email</label>
+        </div>
+        <div class="form-group form-primary">
+          <label class="float-label">email</label>
+          <input class="form-control form-control-user" formControlName="email" placeholder="Votre email"
+                 type="text">
+          <span class="form-bar"></span>
+          <div *ngIf="isSubmitted && formControls['email'].errors" class="form-text text-danger">
+            <div *ngIf="formControls['email'].errors['pattern']">L'adresse e-mail est
+              invalide
+            </div>
+            <div *ngIf="formControls['email'].errors['required']">L'adresse e-mail est
+              obligatoire
+            </div>
           </div>
-          <div class="form-group form-primary">
-            <select formControlName="role" class="form-control">
-              <option value="0">Select Role</option>
-              <option value="ADMIN">ADMIN</option>
-              <option value="userName">Expert</option>
-              <option value="userName">ACHETEUR</option>
-              <option value="userName">VENDEUR</option>
-              <option value="userName">EXPERT</option>
-            </select>    
-              <span class="form-bar"></span>
-              <label class="float-label">Votre Role</label>
+        </div>
+        <div class="form-group form-primary">
+          <label class="float-label">Password</label>
+          <input class="form-control" formControlName="password" type="password" placeholder="Password">
+          <span class="form-bar"></span>
+          <div *ngIf="isSubmitted && formControls['password'].errors" class="form-text text-danger">
+            <div *ngIf="formControls['password'].errors['required']" class="text-red-600">Le mot de passe est
+              obligatoire
+            </div>
+            <div *ngIf="formControls['password'].errors['minLength']" class="text-red-600">Votre mot de passe doit
+              comporter au moins 8 caractères
+            </div>
           </div>
-          <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group form-primary">
-                  <input type="text" class="form-control" id="password" formControlName="password"
-                  placeholder="Pass word">
-                    <span class="form-bar"></span>
-                    <label class="float-label">Password</label>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                  <div class="form-group form-primary">
-                    <input type="password" formControlName="pwdd" class="form-control">
-                      <span class="form-bar"></span>
-                      <label class="float-label">Confirm Password</label>
-                  </div>
-              </div>
+        </div>
+        <div class="form-group form-primary">
+          <label class="float-label">Confirm Password</label>
+          <input class="form-control" formControlName="confirm_password" type="password">
+          <span class="form-bar"></span>
+          <div *ngIf="isSubmitted && formControls['confirm_password'].errors" class="form-text text-danger">
+
+            <div *ngIf="formControls['confirm_password'].errors['required']" class="text-red-600">Le mot de passe de
+              confirmation est
+              obligatoire
+            </div>
+            <div *ngIf="formControls['confirm_password'].errors['confirmedValidator']" class="text-red-600">Le mot de
+              passe et le mot de passe de confirmation doivent correspondre
+            </div>
           </div>
-          
-          <div class="col-12">
-            <button class="btn btn-success w-100" type="submit">S'inscrire</button>
-          </div>
-          <div class="col-12">
-            <p class="small mb-0">Vous avez déjà un compte? <a href="pages-login.html">Connexion</a></p>
-          </div>
-      </div>
-      <!-- /.form-box -->
-    </div><!-- /.card -->
-  </div>
-  </body>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-success w-100" type="submit">S'inscrire</button>
+        </div>
+        <div class="col-12">
+          <p class="small mb-0">Vous avez déjà un compte? <a href="/login">Connexion</a></p>
+        </div>
+      </form>
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+</body>

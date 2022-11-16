@@ -9,7 +9,7 @@ import {catchError} from "rxjs/operators";
   providedIn: 'root'
 })
 export class AuthService {
-  apiUrl = "localhost:8080/"
+  apiUrl = "http://localhost:8080/api/"
   constructor(private http:HttpClient,private router: Router,
     ) { }
   public signIn(value:any) {
@@ -32,7 +32,7 @@ export class AuthService {
     public isLoggedIn() {
       return localStorage.getItem('token') !== null;
     }
- 
+
   errorHandler(error: HttpErrorResponse) {
       return throwError(error);
     }
@@ -51,5 +51,5 @@ export class AuthService {
       localStorage.setItem(key, value);
       return this;
     }
-  
+
 }

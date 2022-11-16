@@ -1,36 +1,46 @@
 
-  <section class="checkout spad">
-    <div class="container">
+  <section class="ml-5">
+    <div class="container ">
         <div class="checkout__form">
             <h4>Gestion des Utilisateurs</h4>
-            <form action="#">
-                <div class="row">
-                    <div class="col-lg-8 col-md-6">
+            <div class="alert alert-primary" *ngIf="isMessage">{{message}}</div>
+            <form method="post" [formGroup]="userForm">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Nom<span></span></p>
-                                    <input type="text">
+                                    <input type="text" formControlName="nom">
+                                  <div *ngIf="isSubmitted && formControls['nom'].errors" class="form-text text-danger">
+                                    <div *ngIf="formControls['nom'].errors['required']" class="text-red-600">Le nom est obligatoire
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Prenom<span></span></p>
-                                    <input type="text">
+                                    <input type="text" formControlName="prenom">
+                                  <div *ngIf="isSubmitted && formControls['prenom'].errors" class="form-text text-danger">
+                                    <div *ngIf="formControls['prenom'].errors['required']" class="text-red-600">Le prénom est obligatoire
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
-                                <div class="checkout__input">
-                                    <p>Teléphone<span></span></p>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-12">
                                 <div class="checkout__input">
                                     <p>Email<span></span></p>
-                                    <input type="text">
+                                    <input type="text" formControlName="email">
+                                  <div *ngIf="isSubmitted && formControls['email'].errors" class="form-text text-danger">
+                                    <div *ngIf="formControls['email'].errors['pattern']">L'adresse e-mail est
+                                      invalide
+                                    </div>
+                                    <div *ngIf="formControls['email'].errors['required']">L'adresse e-mail est
+                                      obligatoire
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                         </div>
@@ -38,35 +48,53 @@
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Password<span></span></p>
-                                    <input type="text">
+                                    <input type="password" formControlName="password">
+                                  <div *ngIf="isSubmitted && formControls['password'].errors" class="form-text text-danger">
+                                    <div *ngIf="formControls['password'].errors['required']" class="text-red-600">Le mot de passe est
+                                      obligatoire
+                                    </div>
+                                    <div *ngIf="formControls['password'].errors['minLength']" class="text-red-600">Votre mot de passe doit
+                                      comporter au moins 8 caractères
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Confirm Password<span></span></p>
-                                    <input type="text">
+                                    <input type="password" formControlName="confirm_password"  name="confirm_password">
+
+                                  <div *ngIf="isSubmitted && formControls['confirm_password'].errors" class="form-text text-danger">
+
+                                    <div *ngIf="formControls['confirm_password'].errors['required']" class="text-red-600">Le mot de passe de
+                                      confirmation est
+                                      obligatoire
+                                    </div>
+                                    <div *ngIf="formControls['confirm_password'].errors['confirmedValidator']" class="text-red-600">Le mot de
+                                      passe et le mot de passe de confirmation doivent correspondre
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label>ROLES</label>
-                                <select name="code_client" class="form-control" formControlName="code_client" id="code_client">
-                                <option value="0">-Select-</option>
-                                <option value="0">ADMIN</option>
-                                <option value="0">ACHETEUR</option>
-                                <option value="0">VENDEUR</option>
-                                <option value="0">EXPERT</option>
+                                <select name="code_client" class="form-control" formControlName="role" id="code_client">
+                                <option value="">-Select-</option>
+                                <option value="ROLE_ADMIN">ADMIN</option>
+                                <option value="ROLE_ACHETEUR">ACHETEUR</option>
+                                <option value="ROLE_VENDEUR">VENDEUR</option>
+                                <option value="ROLE_EXPERT">EXPERT</option>
                                 </select>
+                              <div *ngIf="isSubmitted && formControls['role'].errors" class="form-text text-danger">
+                                <div *ngIf="formControls['role'].errors['required']" class="text-red-600">Le role est obligatoire
+                                </div>
+                              </div>
                               </div>
                         </div>
-                        <div class="row">
-                           
-                            <button type="button" class="btn btn-success">Ajouter</button>
-                            
-                           
+                        <div class="row mb-2">
+                          <button class="btn btn-success"  (click)="editUser()" type="submit" *ngIf="editMode">Modifier</button>
+                          <button class="btn btn-primary"  (click)="addUser()"  type="submit"  *ngIf="!editMode">Ajouter</button>
                         </div>
-                        
-                    </div>
-                </div>
             </form>
         </div>
         <div class="card">
@@ -79,35 +107,22 @@
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Email</th>
-                    <th>Teléphone</th>
-                    <th>Password</th>
-                    <th> Confirm Password</th>
                     <th>ROLES</th>
                     <th>Action</th>
                   </tr>
 
                 </thead>
                 <tbody>
-                    <tr *ngFor="let list of List">
-                        <td>{{list.id}}</td>
-                        <td>{{list.nom}}</td>
-                        <td>{{list.prenom}}</td>
-                        <td>{{list.email}}</td>
-                        <td>{{list.tel}}</td>
-                        <td>{{list.password}}</td>
-                        <td>{{list.confirmpassword}}</td>
-                        <td>{{list.role}}</td>
+                    <tr *ngFor="let user of users">
+                        <td>{{user.id}}</td>
+                        <td>{{user.nom}}</td>
+                        <td>{{user.prenom}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.authorities[0].authority}}</td>
                         <td>
-                            <section>
-                                <div>
-                                  <label>
-                                    <input type="checkbox" checked>BloquerCompte
-                                    <input type="checkbox" checked>Debloquer
-                                  </label>
-                                </div>
-                              </section>
+                          <button class="btn btn-success" (click)="findUser(user)"><i class="fa fa-edit"></i></button>
+                          <button class="btn btn-danger" (click)="deleteUser(user.id)"><i class="fa fa-trash"></i></button>
                         </td>
-                       
                     </tr>
                 </tbody>
               </table>

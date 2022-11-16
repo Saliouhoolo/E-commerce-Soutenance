@@ -10,6 +10,7 @@ import { CategoryComponent } from './components/category/category.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { CommandeComponent } from './components/commande/commande.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -24,12 +25,13 @@ import { ProfileComponent } from './components/profile/profile.component';
     ShopComponent,
     CommandeComponent,
     ProfileComponent,
- 
+
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingMoule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        AdminRoutingMoule,
+        SharedModule,
+        ReactiveFormsModule
+    ]
 })
 export class AdminModule { }

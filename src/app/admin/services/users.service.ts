@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class UsersService {
 
-  apiUrl = "localhost:8080/"
+  apiUrl = "http://localhost:8080/api/"
   constructor(private http:HttpClient,private router: Router,
     ) { }
   public liste() {
@@ -18,8 +18,8 @@ export class UsersService {
     public add(values:any) {
       return   this.http.post<any>(this.apiUrl + 'users',values).pipe(catchError(this.errorHandler))
     }
-    public edit(id:any,values:any) {
-      return   this.http.put<any>(this.apiUrl + 'users/'+id,values).pipe(catchError(this.errorHandler))
+    public edit(values:any) {
+      return   this.http.put<any>(this.apiUrl + 'users/'+values.id,values).pipe(catchError(this.errorHandler))
     }
     public delete(id:any) {
       return   this.http.delete<any>(this.apiUrl + 'users/'+id).pipe(catchError(this.errorHandler))

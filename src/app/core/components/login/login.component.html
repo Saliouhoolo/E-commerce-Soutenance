@@ -8,23 +8,36 @@
         </div>
       </div>
       <div class="card-body">
-        <form class="row g-3 needs-validation" novalidate>
-  
+        <form class="row g-3 needs-validation" method="post" [formGroup]="loginForm" (ngSubmit)="signIn()">
+
           <div class="col-12">
-            <label for="yourUsername" class="form-label">Email</label>
+            <label for="adresse" class="form-label">Email</label>
             <div class="input-group has-validation">
               <span class="input-group-text" id="inputGroupPrepend">@</span>
-              <input type="text" name="username" class="form-control" id="yourUsername" required>
-              <div class="invalid-feedback">Please enter your username.</div>
+              <input  type="email" formControlName="email" class="form-control" id="adresse" >
+              <div class="invalid-feedback" *ngIf="isSubmitted && formControls['email'].errors">
+                <div  *ngIf="formControls['email'].errors['pattern']">L'adresse e-mail est
+                  invalide
+                </div>
+                <div  *ngIf="formControls['email'].errors['required']">L'adresse e-mail est
+                  obligatoire
+                </div>
+              </div>
             </div>
           </div>
-  
+
           <div class="col-12">
             <label for="yourPassword" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="yourPassword" required>
-            <div class="invalid-feedback">please enter your password!</div>
+            <input type="password" formControlName="password" class="form-control" id="yourPassword" >
+            <div class="invalid-feedback" *ngIf="isSubmitted && formControls['password'].errors">
+              <div class="text-red-600" *ngIf="formControls['password'].errors['required']">Le mot de passe est
+                obligatoire
+              </div>
+              <div class="text-red-600" *ngIf="formControls['password'].errors['minLength']">Votre mot de passe doit comporter au moins 8 caractères
+              </div>
+            </div>
           </div>
-         
+
           <div class="col-12">
             <p class="small mb-0"><a href="pages-register.html">mot de passe oublié</a></p>
           </div>
@@ -34,7 +47,7 @@
               <label class="form-check-label" for="rememberMe">Rappelles toi</label>
             </div>
           </div>
-          
+
           <div class="col-12">
             <button class="btn btn-success w-100" type="submit">Connecter</button>
           </div>
@@ -43,9 +56,9 @@
           </div>
         </form>
         <!-- /.social-auth-links -->
-  
-       
-       
+
+
+
       </div>
       <!-- /.card-body -->
     </div>

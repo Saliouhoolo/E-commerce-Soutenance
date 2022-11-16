@@ -25,7 +25,7 @@ export class LoginComponent  {
     let emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
     this.loginForm = this.formBuilder.group({
       email: ['',[Validators.required,Validators.pattern(emailPattern)]],
-password: ['', [Validators.required,Validators.min(4)]]
+      password: ['', [Validators.required,Validators.min(4)]]
     });
   }
 
@@ -42,7 +42,7 @@ this.authService.signIn(this.loginForm.value)
           this.authService.setItem('user', JSON.stringify(res.user));
           let currentUser = this.authService.getCurrentUser();
           if( currentUser.role === "[ROLE_ACHETEUR]" || currentUser.role === "[ROLE_VENDEUR]"  || currentUser.role === "[ROLE_EXPERT]" ){
-            this.router.navigate(['/connected'])
+            this.router.navigate(['/public/home'])
           }
 else {
             this.router.navigate(['admin'])

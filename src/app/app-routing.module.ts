@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "./core/components/login/login.component";
 import {RegisterComponent} from "./core/components/register/register.component";
+import {AuthGuard} from "./core/services/auth.guard";
 
 const routes: Routes = [
   {
@@ -10,16 +11,10 @@ const routes: Routes = [
     data: { preload: false }
   },
   {
-    path: 'connected',
-    loadChildren:  () => import('./connected/connected.module').then(x => x.ConnectedModule),
-    data: { preload: false },
-   // canActivate: [AuthGuard]
-  },
-  {
     path: 'admin',
     loadChildren:  () => import('./admin/admin.module').then(x => x.AdminModule),
     data: { preload: false },
-   // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   { path: '',
     redirectTo: '/public/home',
@@ -37,7 +32,7 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
-  
+
 ];
 
 

@@ -38,7 +38,6 @@ export class RegisterComponent {
   signUp() {
     this.isSubmitted = true;
     if (this.registerForm.invalid) {
-      console.log(this.registerForm.value);
       return;
     }
     this.authService.signUp(this.registerForm.value)
