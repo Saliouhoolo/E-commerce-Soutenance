@@ -1,71 +1,70 @@
 <section class="content-header">
-    <div class="container">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Gestions Catégories</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Categorie</a></li>
-          </ol>
-        </div>
+  <div class="container">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Gestions Catégories</h1>
       </div>
-    </div><!-- /.container-fluid -->
-  </section>
-  <section class="content">
-    <div class="container">
-      <div class="row">
-        <!-- /.col -->
-        <div class="col-md-6">
-            <form action="enhanced-results.html">
-                <div class="row">
-                    <div class="col-md-10 offset-md-1">
-                        <div class="row" >
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label>catégorie</label>
-                                    <input type="text" class="form-control " value="">
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-success">Ajouter</button>
-                        </div>
-                    
-                    </div>
-                </div>
-            </form>
-          <div class="card">
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Categorie</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let list of List">
-                        <td>{{list.id}}</td>
-                        <td>{{list.libelle}}</td>
-                        <td>
-                          <div>
-                              <button type="button" class="btn btn-warning">Edit</button>
-      
-                              <button type="button" class="btn btn-danger">Delete</button>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Categorie</a></li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <!-- /.col -->
+      <div class="col-md-6">
+          <form method="post" [formGroup]="categoriesForm">
+              <div class="row">
+                  <div class="col-md-10 offset-md-1">
+                      <div class="row" >
+                          <div class="col-6">
+                              <div class="form-group">
+                                  <label>catégorie</label>
+                                  <input type="text" class="form-control" formControlName="libelle">
+                              </div>
                           </div>
-                      </td>
-                    </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.card-body -->
+                          <div class="row mb-2">
+                            <button class="btn btn-success"  (click)="editCategory()" type="submit" *ngIf="editMode">Modifier</button>
+                            <button class="btn btn-primary"  (click)="addCategory()"  type="submit"  *ngIf="!editMode">Ajouter</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+        <div class="card">
+          <!-- /.card-header -->
+          <div class="card-body p-0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Categorie</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let categorie of categories">
+                      <td>{{categorie.id}}</td>
+                      <td>{{categorie.libelle}}</td>
+                        <td>
+                          <button class="btn btn-success" (click)="findCategory(categorie)"><i class="fa fa-edit"></i></button>
+                          <button class="btn btn-danger" (click)="deleteCategory(categorie.id)"><i class="fa fa-trash"></i></button>
+                        </td>
+                  </tr>
+              </tbody>
+            </table>
           </div>
-          <!-- /.card -->
-          <!-- /.card -->
+          <!-- /.card-body -->
         </div>
-        <!-- /.col -->
+        <!-- /.card -->
+        <!-- /.card -->
       </div>
-      <!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </section>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</section>

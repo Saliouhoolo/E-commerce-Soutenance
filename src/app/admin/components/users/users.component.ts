@@ -48,7 +48,6 @@ export class UsersComponent implements OnInit {
       },10000)
     })
   }
-
   createForm() {
     let emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
     this.userForm = this.fb.group({
@@ -82,10 +81,8 @@ export class UsersComponent implements OnInit {
         this.isMessage = false
       },10000)
     })
-
   }
   findUser(user:any){
-
     this.userForm = this.fb.group({
       id: [user.id],
       prenom: [user.prenom, Validators.required ],

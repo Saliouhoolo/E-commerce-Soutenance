@@ -14,7 +14,7 @@
   </section>
 <section class="shoping-cart spad">
     <div class="container">
-        <form action="#">
+        <form >
             <div class="row">
                 <div class="col-lg-8 col-md-6">
                     <div class="row">
@@ -67,7 +67,7 @@
             <div class="card-body p-0">
               <table class="table">
                 <thead>
-                  <tr>
+                  <tr >
                     <th style="width: 10px">#</th>
                     <th>Produits</th>
                     <th>Libélle</th>
@@ -79,16 +79,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let list of List">
-                        <td>{{list.id}}</td>
-                        <td>{{list.produits}}
+                    <tr *ngFor="let produit of produits">
+                        <td>{{produit.id}}</td>
+                        <td>{{produit.produits}}
                             <img src="assets/img/cart/cart-1.jpg" alt="">
                         </td>
-                        <td>{{list.libelle}}</td>
-                        <td>{{list.description}}</td>
-                        <td>{{list.quantite}}</td>
-                        <td>{{list.Prix_vente}}</td>
-                        <td>{{list.categorie}}</td>
+                        <td>{{produit.libelle}}</td>
+                        <td>{{produit.description}}</td>
+                        <td>{{produit.quantite}}</td>
+                        <td>{{produit.Prix_vente}}</td>
+                        <td>{{produit.categorie}}</td>
                         <td>
                             <div>
                                 <button type="button" class="btn btn-warning">Edit</button>
