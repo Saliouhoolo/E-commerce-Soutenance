@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProduitService } from '../../services/produit.service';
+import {CategoryService} from "../../services/category.service";
 
 @Component({
   selector: 'app-produit',
@@ -15,10 +16,14 @@ export class ProduitComponent implements OnInit {
   imgURL: any;
   message : string =""
   isMessage = false
-  categoryService: any;
   categoryList: any;
-  constructor(private produitService:ProduitService
-    ,private fb: FormBuilder,)
+  image: string = "";
+  bigSize:string="";
+  showMedia : boolean = false
+  categories: any;
+  ImageDirectoryPath :any ="http://127.0.0.1:8081/"
+  defaultImageCours= "assets/img/cart/cart-1.jpg"
+  constructor(private produitService:ProduitService,private fb: FormBuilder,private categoryService: CategoryService)
      {
       this.createForm()
       }
@@ -27,7 +32,13 @@ export class ProduitComponent implements OnInit {
       }
     ngOnInit(): void {
       this. produitList()
+      this. CategoryList()
     }
+  CategoryList() {
+    this.categoryService.liste().subscribe((response: any) => {
+      this.categories = response;
+    });
+  }
   produitList() {
     this.produitService.liste().subscribe((response: any) => {
       this.produits = response;
@@ -37,8 +48,9 @@ export class ProduitComponent implements OnInit {
     this.produitsForm= this.fb.group({
       libelle: ['',Validators.required],
       description: ['',Validators.required],
-      quantite: ['',Validators.required],
-      prixV: ['',Validators.required],
+      qte: ['',Validators.required],
+      prix: ['',Validators.required],
+      category: ['',Validators.required]
     });
   }
   editProduit()
@@ -47,7 +59,7 @@ export class ProduitComponent implements OnInit {
     if (this.produitsForm.invalid) {
       return;
     }
-    this.categoryService.edit(this.produitsForm.value).subscribe((response:any)=>{
+    this.produitService.edit(this.produitsForm.value).subscribe((response:any)=>{
       this.produitList()
       this.produitsForm.value.reset
       this.message = "Produits modifié avec succés"
@@ -64,14 +76,14 @@ export class ProduitComponent implements OnInit {
     if (this.produitsForm.invalid) {
       return;
     }
-    this.produitService.add(this.produitsForm.value).subscribe((response:any)=>{
+    this.produitService.add(this.produitsForm.value,this.image).subscribe((response:any)=>{
       this.produitList()
       this.produitsForm.value.reset
       this.message = "Produits"
       if(response.delete){
-        this.message = "Categories ajouté avec succés"
+        this.message = "Produits ajouté avec succés"
       }else{
-        this.message = "Impossible d'ajouter votre Categories"
+        this.message = "Impossible d'ajouter votre Produits"
       }
       this.isMessage = true
       setTimeout(()=>{
@@ -81,7 +93,7 @@ export class ProduitComponent implements OnInit {
   }
   deleteProduit(id:any)
   {
-    
+
     this.produitService.delete(id).subscribe((response:any)=>{
       this.produitList()
       this.message = "Produits"
@@ -101,23 +113,18 @@ export class ProduitComponent implements OnInit {
       id: [produit.id],
       Libelle: [produit.Libelle, Validators.required ],
       description: [produit.description, Validators.required ],
-      qauntite: [produit.quantite, Validators.required ],
-      prixV: [produit.prixV, Validators.required ],
+      qte: [produit.qte, Validators.required ],
+      prix: [produit.prix, Validators.required ],
+      category: [produit.category, Validators.required ],
     });
     this.editMode = true
   }
-  ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
-      if (matchingControl.errors && !matchingControl.errors['confirmedValidator']) {
-        return;
-      }
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({confirmedValidator: true});
-      } else {
-        matchingControl.setErrors(null);
-      }
+  public onFileUploade(url:any) {
+    if( url.target.files[0].size/1024/1024 > 5){
+      this.bigSize = "votre image est volumineuse elle ne doit dépassé 5 MO"
+      this.showMedia = false
+      return
     }
-  } 
+    this.image = url.target.files[0];
+  }
 }

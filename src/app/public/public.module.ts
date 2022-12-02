@@ -16,6 +16,7 @@ import { ListCategorieComponent } from './categorie/list-categorie/list-categori
 import { PaiementComponent } from './components/paiement/paiement.component';
 import { DetailProduitsComponent } from './components/detail-produits/detail-produits.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -34,15 +35,16 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     CheckoutComponent,
     PaiementComponent,
     DetailProduitsComponent,
-   
-   
-   
+
+
+
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    PublicRoutingModule
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        RouterModule,
+        PublicRoutingModule,
+        ReactiveFormsModule
+    ]
 })
 export class PublicModule { }

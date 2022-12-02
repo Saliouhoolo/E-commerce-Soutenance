@@ -4,74 +4,113 @@
             <div class="col-lg-12">
             </div>
         </div>
-        <div class="checkout__form">
-            <h4>Choisissez votre Mode de Livraison</h4>
-            <div class="col-sm-6 col-lg-6 mb-3">
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <div class="shipping-method-box">
-                            <div class="title-left">
-                                <h3></h3>
-                            </div>
-                            <div class="mb-4">
-                                <div class="custom-control custom-radio">
-                                    <input id="shippingOption1" name="shipping-option" class="custom-control-input" checked="checked" type="radio">
-                                    <label class="custom-control-label" for="shippingOption1">livraison Standard</label> <span class="float-right font-weight-bold">LIBRE</span> </div>
-                                <div class="ml-4 mb-2 small">(5-7 jours ouvrables)</div>
-                                <div class="custom-control custom-radio">
-                                    <input id="shippingOption2" name="shipping-option" class="custom-control-input" type="radio">
-                                    <label class="custom-control-label" for="shippingOption2">Livraison Express</label> <span class="float-right font-weight-bold">2000FCFA</span> </div>
-                                <div class="ml-4 mb-2 small">(2-4 jours ouvrables)</div>
-                            </div>
-                        </div>
-                    </div>
+      <form class="needs-validation" method="post" [formGroup]="commandeForm">
+
+      <div class="checkout__form">
+          <h4>Liste des produits</h4>
+          <div class="col-sm-6 col-lg-6 mb-3">
+            <div class="row">
+              <div class="col-md-12 col-lg-12">
+                <div class="shipping-method-box">
+                  <div class="title-left">
+                    <h3></h3>
+                  </div>
+                  <div class="mb-4" *ngFor="let produit of produit">
+                    <div class="">
+                      <label class="control-label" for="shippingOption1">{{produit.libelle}}</label> <span class="float-right font-weight-bold">total: {{produit.prix*produit.qte}} FCFA</span> </div>
+                    <div class="ml-4 mb-2 small">quantité: {{produit.qte}} prix: {{produit.prix}} FCFA</div>
+                  </div>
                 </div>
+              </div>
             </div>
-            <form class="needs-validation" novalidate>
+          </div>
+            <div class="col-sm-6 col-lg-6 mb-3">
                 <hr class="mb-4">
-                <div class="title">  
+                <div class="title">
+                  <h4>Paiement</h4> </div>
+                <div class="row">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="shipping-method-box">
+                      <div class="title-left">
+                        <h3></h3>
+                      </div>
+                      <div class="mb-4">
+                        <div class="custom-control custom-radio">
+                          <input id="shippingOption1" name="shipping-option" class="custom-control-input" checked="checked" type="radio">
+                          <label class="custom-control-label" for="shippingOption1">livraison Standard</label> <span class="float-right font-weight-bold">LIBRE</span> </div>
+                        <div class="ml-4 mb-2 small">(5-7 jours ouvrables)</div>
+                        <div class="custom-control custom-radio">
+                          <input id="shippingOption2" name="shipping-option" class="custom-control-input" type="radio">
+                          <label class="custom-control-label" for="shippingOption2">Livraison Express</label> <span class="float-right font-weight-bold">2000FCFA</span> </div>
+                        <div class="ml-4 mb-2 small">(2-4 jours ouvrables)</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="cc-name">Téléphone</label>
+                    <input type="number" class="form-control" id="tel" placeholder=""  formControlName="tel"> <small class="text-muted"></small>
+                    <div class="invalid-feedback" *ngIf="isSubmitted && formControls['tel'].errors && formControls['tel'].errors['require']">Le Téléphone  est
+                      obligatoire
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="cc-number">Adresse de livraison</label>
+                    <input type="text" class="form-control" id="adresse" placeholder="" formControlName="adresse">
+                    <div class="invalid-feedback" *ngIf="isSubmitted && formControls['adresse'].errors && formControls['adresse'].errors['require']">L'adresse  est
+                      obligatoire
+                    </div>
+                  </div>
+                </div>
+                <hr class="mb-1">
+
+            </div>
+                <hr class="mb-4">
+                <div class="title">
                     <h4>Paiement</h4> </div>
                 <div class="d-block my-3">
                     <div class="custom-control custom-radio">
-                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked >
                         <label class="custom-control-label" for="credit">ORANGE Money</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" >
                         <label class="custom-control-label" for="debit">WAVE</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" >
                         <label class="custom-control-label" for="paypal">Paypal</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="cc-name">Nom de la carte</label>
-                        <input type="text" class="form-control" id="cc-name" placeholder="" required> <small class="text-muted"></small>
-                        <div class="invalid-feedback"> Name on card is required </div>
+                        <input type="text" class="form-control" id="cc-name" placeholder="" > <small class="text-muted"></small>
+                        <div class="invalid-feedback"> Name on card is  </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="cc-number">Numéro de la Carte</label>
-                        <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                        <div class="invalid-feedback"> Credit card number is required </div>
+                        <input type="text" class="form-control" id="cc-number" placeholder="" >
+                        <div class="invalid-feedback"> Credit card number is  </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label for="cc-expiration">Date Expiration</label>
-                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                        <div class="invalid-feedback"> Expiration date required </div>
+                        <input type="text" class="form-control" id="cc-expiration" placeholder="" >
+                        <div class="invalid-feedback"> Expiration date  </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="cc-expiration">CVV Security</label>
-                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                        <div class="invalid-feedback"> Security code required </div>
+                        <input type="text" class="form-control" id="cc-cvv" placeholder="" >
+                        <div class="invalid-feedback"> Security code  </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success">VALIDER VOTRE ACHAT</button>
-                <hr class="mb-1"> </form>
-                
+                <button type="submit" (click)="addCommande()" class="btn btn-success">VALIDER VOTRE ACHAT</button>
+                <hr class="mb-1">
         </div>
+      </form>
+
     </div>
 </section>

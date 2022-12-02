@@ -16,8 +16,8 @@ export class CategoryComponent implements OnInit {
   isMessage = false
   constructor(private categoryService:
     CategoryService,
-    private fb: FormBuilder,) 
-    { 
+    private fb: FormBuilder,)
+    {
       this.createForm()
     }
     get formControls() {
@@ -84,7 +84,7 @@ export class CategoryComponent implements OnInit {
         this.isMessage = false
       },10000)
     })
-  
+
   }
   findCategory(categorie:any){
     this.categoriesForm = this.fb.group({
@@ -97,19 +97,5 @@ export class CategoryComponent implements OnInit {
     this.categoriesForm= this.fb.group({
       libelle: ['',Validators.required]
     });
-  }
-  ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
-      if (matchingControl.errors && !matchingControl.errors['confirmedValidator']) {
-        return;
-      }
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({confirmedValidator: true});
-      } else {
-        matchingControl.setErrors(null);
-      }
-    }
   }
 }

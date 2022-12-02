@@ -22,11 +22,6 @@ List :any
         console.log(err)
       })
   }
-  edit(){
-
-  }
-  add(){}
-  delete(){}
 
 
 }

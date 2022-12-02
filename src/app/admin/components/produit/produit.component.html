@@ -14,56 +14,80 @@
   </section>
 <section class="shoping-cart spad">
     <div class="container">
-        <form >
-            <div class="row">
-                <div class="col-lg-8 col-md-6">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="checkout__input">
-                                <p>Libellé<span></span></p>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="checkout__input">
-                                <p>Description<span></span></p>
-                                <input type="text">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="checkout__input">
-                                <p>Quantité<span></span></p>
-                                <input type="text">
-                            </div>
-                         </div>
-                         <div class="col-lg-6">
-                            <div class="checkout__input">
-                                <p>Prix_Vente<span></span></p>
-                                <input type="text">
-                            </div>
-                         </div>
-                         <div class="col-lg-12">
-                            <div class="checkout__input">
-                                <p>Choisir_Produits<span></span></p>
-                                <input class="form-control" type="file" id="formFile">
-                            </div>
-                         </div>
-                         <div class="col-md-12 form-group">
-                            <label>Categorie</label>
-                            <select name="code_client" class="form-control" formControlName="code_client" id="code_client">
-                            <option value="0">-Select-</option>
-                            <option value="0">Légumes racines</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="row">
-                            <button type="button" class="btn btn-success">Ajouter</button>
-                        </div>
-                    </div>
+      <div class="alert alert-primary" *ngIf="isMessage">{{message}}</div>
+      <form method="post" [formGroup]="produitsForm">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="checkout__input">
+              <p>Libelle<span></span></p>
+              <input type="text" formControlName="libelle">
+              <div *ngIf="isSubmitted && formControls['libelle'].errors" class="form-text text-danger">
+                <div *ngIf="formControls['libelle'].errors['required']" class="text-red-600">Le libelle est obligatoire
                 </div>
-        </form>
-        <div class="card">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="checkout__input">
+              <p>Prix<span></span></p>
+              <input type="number" formControlName="prix">
+              <div *ngIf="isSubmitted && formControls['prix'].errors" class="form-text text-danger">
+                <div *ngIf="formControls['prix'].errors['required']" class="text-red-600">Le prix est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="checkout__input">
+              <p>Quantité<span></span></p>
+              <input type="number" formControlName="qte">
+              <div *ngIf="isSubmitted && formControls['qte'].errors" class="form-text text-danger">
+                <div *ngIf="formControls['qte'].errors['required']" class="text-red-600">La Quantité est obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label>Image</label>
+            <input  (change)="onFileUploade($event)"   type="file">
+          </div>
+          <div class="col-md-12 form-group">
+            <label>categorie</label>
+            <select name="code_client" class="form-control" formControlName="category" >
+              <option value="">-Selectionner une catégorie</option>
+              <option value="{{category.id}}" *ngFor="let category of categories">{{category.libelle}}</option>
+            </select>
+            <div *ngIf="isSubmitted && formControls['category'].errors" class="form-text text-danger">
+              <div *ngIf="formControls['category'].errors['required']" class="text-red-600">La categorie est obligatoire
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-12">
+            <div class="checkout__input">
+              <p>Description<span></span></p>
+              <textarea type="text" formControlName="description" cols="150" rows="10"></textarea>
+              <div *ngIf="isSubmitted && formControls['description'].errors" class="form-text text-danger">
+                <div *ngIf="formControls['description'].errors['pattern']">La description  est
+                  invalide
+                </div>
+                <div *ngIf="formControls['description'].errors['required']">La description  est
+                  obligatoire
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <button class="btn btn-success"  (click)="editProduit()" type="submit" *ngIf="editMode">Modifier</button>
+          <button class="btn btn-primary"  (click)="addProduit()"  type="submit"  *ngIf="!editMode">Ajouter</button>
+        </div>
+      </form>        <div class="card">
             <div class="card-body p-0">
               <table class="table">
                 <thead>
@@ -82,18 +106,18 @@
                     <tr *ngFor="let produit of produits">
                         <td>{{produit.id}}</td>
                         <td>{{produit.produits}}
-                            <img src="assets/img/cart/cart-1.jpg" alt="">
+                            <img [src]="produit.image?ImageDirectoryPath+produit.image:defaultImageCours"  alt="">
                         </td>
                         <td>{{produit.libelle}}</td>
                         <td>{{produit.description}}</td>
-                        <td>{{produit.quantite}}</td>
-                        <td>{{produit.Prix_vente}}</td>
-                        <td>{{produit.categorie}}</td>
+                        <td>{{produit.qte}}</td>
+                        <td>{{produit.prix}}</td>
+                        <td>{{produit?.category.libelle}}</td>
                         <td>
                             <div>
-                                <button type="button" class="btn btn-warning">Edit</button>
-        
-                                <button type="button" class="btn btn-danger">Delete</button>
+                                <button type="button" class="btn btn-warning" (click)="findproduit(produit)">Edit</button>
+
+                                <button type="button" class="btn btn-danger" (click)="deleteProduit(produit.id)">Delete</button>
                             </div>
                         </td>
                     </tr>

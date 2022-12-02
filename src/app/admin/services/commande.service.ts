@@ -9,8 +9,8 @@ import { catchError } from 'rxjs/operators';
 })
 export class CommandeService {
 
- 
-  apiUrl = "localhost:8080/"
+
+  apiUrl = "http://localhost:8081/api/"
   constructor(private http:HttpClient,private router: Router,
     ) { }
   public liste() {
@@ -19,13 +19,6 @@ export class CommandeService {
     public add(values:any) {
       return   this.http.post<any>(this.apiUrl + 'commande',values).pipe(catchError(this.errorHandler))
     }
-    public edit(id:any,values:any) {
-      return   this.http.put<any>(this.apiUrl + 'commande/'+id,values).pipe(catchError(this.errorHandler))
-    }
-    public delete(id:any) {
-      return   this.http.delete<any>(this.apiUrl + 'commande/'+id).pipe(catchError(this.errorHandler))
-    }
-
 
     errorHandler(error: HttpErrorResponse) {
       return throwError(error);

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckoutService } from 'src/app/admin/services/checkout.service';
+import {AuthService} from "../../../core/services/auth.service";
+import {ShopService} from "../../services/shop.service";
 
 @Component({
   selector: 'app-checkout',
@@ -8,27 +10,33 @@ import { CheckoutService } from 'src/app/admin/services/checkout.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor(private checkoutService:CheckoutService) { }
-  List =[
-    {"id":"1","produits":"","libelle":"Fruits","description":"Tomate", "quantite":"450kg", "Prix_regulier":"100FCFA","Prix_vente":"96FCFA","categorie":"Fruits"}
-  ]
-  ngOnInit(): void {
-   // this.lister()
+  produit!:any
+  total= 0
+  user : any | undefined;
+  ImageDirectoryPath :any ="http://127.0.0.1:8081/"
+  defaultImageCours ="assets/assets/images/produites/4by3/08.jpg"
+  constructor( private authService: AuthService, private  shopService: ShopService) {
+    // @ts-ignore
+    this.produit = JSON.parse(localStorage.getItem("cart"));
+    ;
   }
-  lister(){
-    this.checkoutService.liste().subscribe(
-      (res:any)=>{
-    this.List = res
-      },
-      err => {
-        console.log(err)
-      })
+  ngOnInit() {
+    this.user= this.authService.getCurrentUser()
+    this.produit.forEach((obj:any) => {
+      this.total  += Number(obj.prix);
+    })
   }
-  edit(){
+  deleteItemCard(id:any){
+    this.shopService.deleteItemCard(id)
+    this.reload()
 
   }
-  add(){}
-  delete(){}
-
+  deleteCard(){
+    this.shopService.deleteCard()
+    this.reload()
+  }
+  reload(){
+    location.reload();
+  }
 
 }
