@@ -22,6 +22,14 @@ List :any
         console.log(err)
       })
   }
-
+  changeStatus(id:number){
+    this.commandeService.changeStatus(id).subscribe(
+      (res:any)=>{
+        this.lister()
+      },
+      err => {
+        console.log(err)
+      })
+  }
 
 }

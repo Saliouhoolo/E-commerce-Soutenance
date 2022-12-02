@@ -29,11 +29,13 @@ export class ShopService {
     // @ts-ignore
     let cart = JSON.parse(localStorage.getItem("cart"));
     if(cart.length === 0){
+      produit.qte = 1
       cart.push(produit);
       localStorage.setItem("cart", JSON.stringify(cart));
     }else{
       let res =  cart.findIndex((item:any) => item?.id === produit.id);
       if(res === -1){
+        produit.qte = 1
         cart.push(produit);
         localStorage.setItem("cart", JSON.stringify(cart));
       }else{

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../core/services/auth.service";
 import {ShopService} from "../../services/shop.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-paiement',
@@ -17,9 +18,9 @@ export class PaiementComponent implements OnInit {
   user : any | undefined;
   ImageDirectoryPath :any ="http://127.0.0.1:8081/"
   defaultImageCours ="assets/assets/images/produites/4by3/08.jpg"
-  private isMessage!: boolean;
-  private message!: string;
-  constructor( private authService: AuthService, private  shopService: ShopService,private fb: FormBuilder) {
+   isMessage!: boolean;
+   message!: string;
+  constructor( private authService: AuthService, private  shopService: ShopService,private fb: FormBuilder,private router:Router) {
     // @ts-ignore
     this.produit = JSON.parse(localStorage.getItem("cart"));
     this.createForm()
@@ -42,6 +43,7 @@ export class PaiementComponent implements OnInit {
     })
   }
   addCommande(){
+
     this.isSubmitted = true;
     if (this.commandeForm.invalid) {
       console.log(this.commandeForm.value)
@@ -53,7 +55,10 @@ export class PaiementComponent implements OnInit {
       this.isMessage = true
       setTimeout(()=>{
         this.isMessage = false
-      },10000)
+        this.deleteCard()
+        this.router.navigate(["/public/home"])
+
+      },8000)
     })
   }
   deleteItemCard(id:any){
@@ -63,7 +68,6 @@ export class PaiementComponent implements OnInit {
   }
   deleteCard(){
     this.shopService.deleteCard()
-    this.reload()
   }
   reload(){
     location.reload();

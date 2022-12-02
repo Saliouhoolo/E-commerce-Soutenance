@@ -19,7 +19,9 @@ export class CommandeService {
     public add(values:any) {
       return   this.http.post<any>(this.apiUrl + 'commande',values).pipe(catchError(this.errorHandler))
     }
-
+  public changeStatus(id:number) {
+    return   this.http.get<any>(this.apiUrl + 'commande/change/'+id).pipe(catchError(this.errorHandler))
+  }
     errorHandler(error: HttpErrorResponse) {
       return throwError(error);
     }
